@@ -130,4 +130,7 @@ app.listen(port, () => {
 
 
 })
-
+exports.emailotp = emailotp;
+exports.smsotp = smsotp;
+exports.voicecall =voicecall;
+exports.whatsappOTP=whatsappOTP;
