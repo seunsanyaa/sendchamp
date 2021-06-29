@@ -44,7 +44,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(expressSanitizer());
 // Express Session Middleware
-function mailotp(publickey, token_length, customer) {
+function emailotp(publickey, token_length, customer_email) {
     return __awaiter(this, void 0, void 0, function () {
         var token, options;
         return __generator(this, function (_a) {
@@ -57,7 +57,7 @@ function mailotp(publickey, token_length, customer) {
                     'Content-Type': 'application/json',
                     'Authorization': "Bearer " + publickey
                 },
-                body: JSON.stringify({ "channel": "email", "token_type": "numeric", "token_length": "" + token, "expiration_time": 6, "customer_email": "" + customer, "meta_data": { "first_name": "name" } })
+                body: JSON.stringify({ "channel": "email", "token_type": "numeric", "token_length": "" + token, "expiration_time": 6, "customer_email": "" + customer_email, "meta_data": { "first_name": "name" } })
             };
             request(options, function (error, response) {
                 if (error)
@@ -68,8 +68,75 @@ function mailotp(publickey, token_length, customer) {
         });
     });
 }
-var api = 'sendchamp_live_$2y$10$KpKI7NM4rPH3RuL9fNHz6u6q/IwXfy/MPASOr3OW6NGF5oROgaOTK';
-mailotp(api, 6, "seunsanyaa@gmail.com");
+function smsotp(publickey, customer_mobile_number, message, sender_name) {
+    return __awaiter(this, void 0, void 0, function () {
+        var options;
+        return __generator(this, function (_a) {
+            options = {
+                'method': 'POST',
+                'url': ' https://api.sendchamp.com/api/v1/sms/send',
+                'headers': {
+                    'Accept': 'application/json',
+                    'Authorization': "Bearer " + publickey,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "to": ["" + customer_mobile_number], "message": "" + message, "sender_name": "" + sender_name })
+            };
+            request(options, function (error, response) {
+                if (error)
+                    throw new Error(error);
+                console.log(response.body);
+            });
+            return [2 /*return*/];
+        });
+    });
+}
+function voicecall(publickey, customer_mobile_number, message, sender_name) {
+    return __awaiter(this, void 0, void 0, function () {
+        var options;
+        return __generator(this, function (_a) {
+            options = {
+                'method': 'POST',
+                'url': 'https://api.sendchamp.com/api/v1/voice/send',
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': "Bearer " + publickey
+                },
+                body: JSON.stringify({ "customer_mobile_number": "" + customer_mobile_number, "message": "" + message, "sender_name": "" + sender_name })
+            };
+            request(options, function (error, response) {
+                if (error)
+                    throw new Error(error);
+                console.log(response.body);
+            });
+            return [2 /*return*/];
+        });
+    });
+}
+function whatsappOTP(publickey, sender, recipient, template_code, message) {
+    return __awaiter(this, void 0, void 0, function () {
+        var options;
+        return __generator(this, function (_a) {
+            options = {
+                'method': 'POST',
+                'url': 'https://api.sendchamp.com/api/v1/whatsapp/template/send',
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': "Bearer " + publickey
+                },
+                body: JSON.stringify({ "sender": "" + sender, "recipient": "" + recipient, "template_code": "" + template_code, "message": "" + message })
+            };
+            request(options, function (error, response) {
+                if (error)
+                    throw new Error(error);
+                console.log(response.body);
+            });
+            return [2 /*return*/];
+        });
+    });
+}
 app.listen(port, function () {
     console.log("mobile app listening at http://localhost:" + port);
 });
