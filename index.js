@@ -140,3 +140,8 @@ function whatsappOTP(publickey, sender, recipient, template_code, message) {
 app.listen(port, function () {
     console.log("mobile app listening at http://localhost:" + port);
 });
+// module.exports= emailotp
+exports.emailotp = emailotp;
+exports.smsotp = smsotp;
+exports.voicecall = voicecall;
+exports.whatsappOTP = whatsappOTP;

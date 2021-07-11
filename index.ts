@@ -7,10 +7,6 @@ const app = express();
 
 
 
-
-
-
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(expressSanitizer());
@@ -128,8 +124,11 @@ async function whatsappOTP(publickey:string,sender:string,recipient:string,templ
 app.listen(port, () => {
     console.log(`mobile app listening at http://localhost:${port}`);
 
-
 })
+
+
+
+// module.exports= emailotp
 exports.emailotp = emailotp;
 exports.smsotp = smsotp;
 exports.voicecall =voicecall;
