@@ -15,7 +15,7 @@ const sendchamp = require('sendchamp');
 
 <h1>Using Email API</h1>
   
- sendchamp.email( <b>publickey , token_length , customer_email</b> )
+ sendchamp.emailotp( <b>publickey , token_length , customer_email</b> )
  
  <h1>Using SMS API</h1>
   
