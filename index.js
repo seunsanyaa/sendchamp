@@ -44,10 +44,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(expressSanitizer());
 // Express Session Middleware
-function emailotp(publickey, token_length, customer_email) {
+function emailotp(publickey, customer_mobile_number, customer_email, token_type, token_length, expiration_time, metadata) {
     return __awaiter(this, void 0, void 0, function () {
-        var token, options;
+        var tokenType, expiration, token, options;
         return __generator(this, function (_a) {
+            tokenType = token_type !== undefined ? token_type : 'numeric';
+            expiration = expiration_time !== undefined ? expiration_time : 6;
             token = token_length !== undefined ? token_length : 5;
             options = {
                 'method': 'POST',
@@ -57,7 +59,7 @@ function emailotp(publickey, token_length, customer_email) {
                     'Content-Type': 'application/json',
                     'Authorization': "Bearer " + publickey
                 },
-                body: JSON.stringify({ "channel": "email", "token_type": "numeric", "token_length": "" + token, "expiration_time": 6, "customer_email": "" + customer_email, "meta_data": { "first_name": "name" } })
+                body: JSON.stringify({ "channel": "email", "token_type": tokenType, "token_length": "" + token, "expiration_time": expiration, "customer_email": "" + customer_email, "customer_mobile_number": "" + customer_mobile_number, "meta_data": metadata })
             };
             request(options, function (error, response) {
                 if (error)
@@ -68,19 +70,22 @@ function emailotp(publickey, token_length, customer_email) {
         });
     });
 }
-function smsotp(publickey, customer_mobile_number, message, sender_name) {
+function smsotp(publickey, customer_mobile_number, customer_email, token_type, token_length, expiration_time, metadata) {
     return __awaiter(this, void 0, void 0, function () {
-        var options;
+        var tokenType, expiration, token, options;
         return __generator(this, function (_a) {
+            tokenType = token_type !== undefined ? token_type : 'numeric';
+            expiration = expiration_time !== undefined ? expiration_time : 6;
+            token = token_length !== undefined ? token_length : 5;
             options = {
                 'method': 'POST',
-                'url': ' https://api.sendchamp.com/api/v1/sms/send',
+                'url': 'https://api.sendchamp.com/api/v1/verification/create',
                 'headers': {
                     'Accept': 'application/json',
-                    'Authorization': "Bearer " + publickey,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + publickey
                 },
-                body: JSON.stringify({ "to": ["" + customer_mobile_number], "message": "" + message, "sender_name": "" + sender_name })
+                body: JSON.stringify({ "channel": "sms", "token_type": tokenType, "token_length": "" + token, "expiration_time": expiration, "customer_email": "" + customer_email, "customer_mobile_number": "" + customer_mobile_number, "meta_data": metadata })
             };
             request(options, function (error, response) {
                 if (error)
@@ -91,7 +96,33 @@ function smsotp(publickey, customer_mobile_number, message, sender_name) {
         });
     });
 }
-function voicecall(publickey, customer_mobile_number, message, sender_name) {
+function whatsappOTP(publickey, customer_mobile_number, customer_email, token_type, token_length, expiration_time, metadata) {
+    return __awaiter(this, void 0, void 0, function () {
+        var tokenType, expiration, token, options;
+        return __generator(this, function (_a) {
+            tokenType = token_type !== undefined ? token_type : 'numeric';
+            expiration = expiration_time !== undefined ? expiration_time : 6;
+            token = token_length !== undefined ? token_length : 5;
+            options = {
+                'method': 'POST',
+                'url': 'https://api.sendchamp.com/api/v1/verification/create',
+                'headers': {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + publickey
+                },
+                body: JSON.stringify({ "channel": "whatsapp", "token_type": tokenType, "token_length": "" + token, "expiration_time": expiration, "customer_email": "" + customer_email, "customer_mobile_number": "" + customer_mobile_number, "meta_data": metadata })
+            };
+            request(options, function (error, response) {
+                if (error)
+                    throw new Error(error);
+                console.log(response.body);
+            });
+            return [2 /*return*/];
+        });
+    });
+}
+function texttospeech(publickey, customer_mobile_number, message, sender_name) {
     return __awaiter(this, void 0, void 0, function () {
         var options;
         return __generator(this, function (_a) {
@@ -114,19 +145,19 @@ function voicecall(publickey, customer_mobile_number, message, sender_name) {
         });
     });
 }
-function whatsappOTP(publickey, sender, recipient, template_code, message) {
+function confirmotp(publickey, verifiationCode, verification_reference) {
     return __awaiter(this, void 0, void 0, function () {
         var options;
         return __generator(this, function (_a) {
             options = {
                 'method': 'POST',
-                'url': 'https://api.sendchamp.com/api/v1/whatsapp/template/send',
+                'url': 'https://api.sendchamp.com/api/v1/verification/confirm',
                 'headers': {
-                    'Content-Type': 'application/json',
                     'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                     'Authorization': "Bearer " + publickey
                 },
-                body: JSON.stringify({ "sender": "" + sender, "recipient": "" + recipient, "template_code": "" + template_code, "message": "" + message })
+                body: JSON.stringify({ "verification_code": verifiationCode, "verification_reference": verification_reference })
             };
             request(options, function (error, response) {
                 if (error)
@@ -138,10 +169,10 @@ function whatsappOTP(publickey, sender, recipient, template_code, message) {
     });
 }
 app.listen(port, function () {
-    console.log("mobile app listening at http://localhost:" + port);
+    console.log("sendchamp listening at http://localhost:" + port);
 });
-// module.exports= emailotp
 exports.emailotp = emailotp;
 exports.smsotp = smsotp;
-exports.voicecall = voicecall;
+exports.texttospeech = texttospeech;
 exports.whatsappOTP = whatsappOTP;
+exports.confirmotp = confirmotp;
