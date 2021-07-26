@@ -26,7 +26,7 @@ const sendchamp = require('sendchamp');
 ```
 
 
-<h1>Using Email API</h1>
+<h1>Using Email OTP API</h1>
 
 ```javascript
  sendchamp.emailotp( publickey, customer_mobile_number, customer_email, token_type, token_length, expiration_time, etadata )
@@ -41,7 +41,7 @@ token_length == 5
   
 
  
- <h1>Using SMS API</h1>
+ <h1>Using SMS OTP API</h1>
  
  
  
