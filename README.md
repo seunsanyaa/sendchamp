@@ -1,4 +1,4 @@
-This library allows you to quickly and easily use the sendchamp nodejs library.
+This library allows you to quickly and easily use the sendchamp nodejs library. 
 <h1>Installing</h1>
 using npm<br><br>
 
@@ -101,3 +101,4 @@ token_length == 5
   
   
 
+Visit the <a href='https://docs.sendchamp.com/'>sendchamp website</a> for full doocumentation of APIs
