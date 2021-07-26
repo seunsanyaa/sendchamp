@@ -29,7 +29,7 @@ const sendchamp = require('sendchamp');
 <h1>Using Email OTP API</h1>
 
 ```javascript
- sendchamp.emailotp( publickey, customer_mobile_number, customer_email, token_type, token_length, expiration_time, etadata )
+ sendchamp.emailotp( publickey, customer_mobile_number, customer_email, token_type, token_length, expiration_time, metadata )
  
  The following parameters are not required and have default values.
  
@@ -68,7 +68,7 @@ token_length == 5
 ```javascript
 
 
- sendchamp.whatsappOTP( publickey,customer_mobile_number,customer_email,token_type,token_length,expiration_time,metadata )
+ sendchamp.whatsappOTP( publickey, customer_mobile_number, customer_email, token_type, token_length, expiration_time, metadata )
  
   The following parameters are not required and have default values.
  
