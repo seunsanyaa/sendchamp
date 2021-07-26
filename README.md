@@ -1,9 +1,18 @@
 This library allows you to quickly and easily use the sendchamp nodejs library.
 <h1>Installing</h1>
 using npm<br><br>
-<b> $ npm install sendchamp</b><br><br>
+
+```javascript
+  npm install sendchamp
+
+```
 using yarn<br><br>
-<b> $ yarn install sendchamp</b><br><br>
+
+```javascript
+ yarn install sendchamp
+
+```
+
 
 <h1>Example</h1>
 
@@ -11,16 +20,38 @@ using yarn<br><br>
 
 In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with require() use the following approach:<br><br>
 
+```javascript
 const sendchamp = require('sendchamp');
 
+```
+
+
 <h1>Using Email API</h1>
+
+```javascript
+ sendchamp.emailotp( publickey , token_length , customer_email )
+
+```
   
- sendchamp.emailotp( <b>publickey , token_length , customer_email</b> )
+
  
  <h1>Using SMS API</h1>
+ 
+ 
+```javascript
+sendchamp.smsotp( publickey , customer_mobile_number , message , sender_name )
+
+```
+ 
   
- sendchamp.smsotp( <b>publickey , customer_mobile_number , message , sender_name</b> )
+ 
  
   <h1>Using whatsapp OTP API</h1>
   
- sendchamp.whatsappOTP( <b>publickey , sender , recipient , template_code , message</b> )
+  
+  
+```javascript
+ sendchamp.whatsappOTP( publickey , sender , recipient , template_code , message)
+```
+  
+
