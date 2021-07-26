@@ -29,7 +29,13 @@ const sendchamp = require('sendchamp');
 <h1>Using Email API</h1>
 
 ```javascript
- sendchamp.emailotp( publickey , token_length , customer_email )
+ sendchamp.emailotp( publickey, customer_mobile_number, customer_email, token_type, token_length, expiration_time, etadata )
+ 
+ The following parameters are not required and have default values.
+ 
+token_type == 'numeric'
+expiration_time == 6
+token_length == 5
 
 ```
   
@@ -38,8 +44,17 @@ const sendchamp = require('sendchamp');
  <h1>Using SMS API</h1>
  
  
+ 
+ 
 ```javascript
-sendchamp.smsotp( publickey , customer_mobile_number , message , sender_name )
+sendchamp.smsotp( publickey, customer_mobile_number, customer_email, token_type, token_length, expiration_time, metadata )
+
+ The following parameters are not required and have default values.
+ 
+token_type == 'numeric'
+expiration_time == 6
+token_length == 5
+
 
 ```
  
@@ -51,7 +66,38 @@ sendchamp.smsotp( publickey , customer_mobile_number , message , sender_name )
   
   
 ```javascript
- sendchamp.whatsappOTP( publickey , sender , recipient , template_code , message)
+
+
+ sendchamp.whatsappOTP( publickey,customer_mobile_number,customer_email,token_type,token_length,expiration_time,metadata )
+ 
+  The following parameters are not required and have default values.
+ 
+token_type == 'numeric'
+expiration_time == 6
+token_length == 5
+
 ```
+
+
+
+ <h1>Confriming the OTP codes from varioys channels</h1>
+  
+  
+  
+```javascript
+ sendchamp.confirmotp( publickey, verifiationCode, verification_reference )
+```
+  
+
+
+
+  <h1>Using Text TO Speech API</h1>
+  
+  
+  
+```javascript
+ sendchamp.texttospeech( publickey, customer_mobile_number, message, sender_name)
+```
+  
   
 
